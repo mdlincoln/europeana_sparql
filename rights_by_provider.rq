@@ -1,19 +1,18 @@
-    PREFIX dc:  <http://purl.org/dc/elements/1.1/>
-    PREFIX dct: <http://purl.org/dc/terms/>
-    PREFIX edm: <http://www.europeana.eu/schemas/edm/>
-    PREFIX ens: <http://www.europeana.eu/schemas/edm/>
-    PREFIX ore: <http://www.openarchives.org/ore/terms/>
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dc:  <http://purl.org/dc/elements/1.1/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX edm: <http://www.europeana.eu/schemas/edm/>
+PREFIX ens: <http://www.europeana.eu/schemas/edm/>
+PREFIX ore: <http://www.openarchives.org/ore/terms/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-    SELECT DISTINCT ?edmrights ?provider (COUNT(*) as ?count)
-    WHERE {
-      ?agg rdf:type ore:Aggregation .
-      ?agg edm:rights ?edmrights .
-      #?agg dc:rights ?dcrights .
-      ?agg edm:dataProvider ?provider .
-      
-      ?proxy ore:proxyIn ?agg .
-      ?proxy edm:type "IMAGE" .
-    }
-    GROUP BY ?edmrights ?provider
-    ORDER BY ?provider DESC(?count)
+SELECT ?edmrights ?provider (COUNT(*) as ?count)
+WHERE {
+  ?agg rdf:type ore:Aggregation .
+  ?agg edm:rights ?edmrights .
+  ?agg edm:dataProvider ?provider .
+
+  ?proxy ore:proxyIn ?agg .
+  ?proxy edm:type "IMAGE" .
+}
+GROUP BY ?edmrights ?provider
+ORDER BY ?provider DESC(?count)

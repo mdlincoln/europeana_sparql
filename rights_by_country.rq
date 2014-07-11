@@ -1,0 +1,22 @@
+PREFIX dc:  <http://purl.org/dc/elements/1.1/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX edm: <http://www.europeana.eu/schemas/edm/>
+PREFIX ens: <http://www.europeana.eu/schemas/edm/>
+PREFIX ore: <http://www.openarchives.org/ore/terms/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?edmrights ?country (COUNT(*) as ?count)
+WHERE {
+
+  ?item rdf:type edm:ProvidedCHO .
+
+  ?provAgg edm:aggregatedCHO ?item .
+  ?provAgg rdf:type ore:Aggregation .
+
+  ?eurAgg edm:aggregatedCHO ?item .
+  ?eurAgg rdf:type edm:EuropeanaAggregation .
+
+  ?provAgg edm:rights ?edmrights .
+  ?eurAgg edm:country ?country .
+}
+GROUP BY ?edmrights ?country
